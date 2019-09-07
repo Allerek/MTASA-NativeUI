@@ -74,7 +74,9 @@ addCommandHandler("updatenative",function(player)
 		outputDebugString("[NativeUI]Player "..getPlayerName(player).." attempt to update native (Allowed)")
 		outputDebugString("[NativeUI]Preparing for updating native")
 		outputChatBox("[NativeUI]Preparing for updating native",root,0,255,0)
-		if RemoteVersion > Version then
+        if RemoteVersion > Version then
+            print(RemoteVersion)
+            print(Version)
 			startUpdate()
 		else
 			ManualUpdate = true
