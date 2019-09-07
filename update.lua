@@ -181,6 +181,10 @@ function DownloadFiles()
 	end,"",false,preUpdate[UpdateCount])
 end
 
+
+
+
+
 function DownloadFinish()
 	outputDebugString("[NativeUI]Changing Config File")
 	if fileExists("update.cfg") then
@@ -189,9 +193,6 @@ function DownloadFinish()
 	local file = fileCreate("update.cfg")
 	fileWrite(file,tostring(RemoteVersion))
 	fileClose(file)
-	if fileExists("meta.xml") then
-		fileDelete("meta.xml")
-	end
 	outputDebugString("[NativeUI]Update Complete (Updated "..#preUpdate.." Files)")
 	outputDebugString("[NativeUI]Please Restart NativeUI")
 	outputChatBox("[NativeUI]Update Complete (Updated "..#preUpdate.." Files)",root,0,255,0)
