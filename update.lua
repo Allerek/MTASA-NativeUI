@@ -50,7 +50,7 @@ function startUpdate()
 		outputDebugString("[NativeUI]Requesting Update Data (From github)...")
 		fetchRemote("https://raw.githubusercontent.com/Allerek/MTASA-NativeUI/master/meta.xml",function(data,err)
 			if err == 0 then
-				outputDebugString("[DGS]Update Data Acquired")
+				outputDebugString("[NativeUI]Update Data Acquired")
 				if fileExists("updated/meta.xml") then
 					fileDelete("updated/meta.xml")
 				end
@@ -65,6 +65,7 @@ function startUpdate()
 		end)
 	end,50,1)
 end
+
 
 addCommandHandler("updatenative",function(player)
 	local account = getPlayerAccount(player)
@@ -171,9 +172,9 @@ function DownloadFiles()
 			fileWrite(file,data)
 			local newsize = fileGetSize(file)
 			fileClose(file)
-			outputDebugString("[DGS]File Got ("..UpdateCount.."/"..#preUpdate.."): "..path.." [ "..size.."B -> "..newsize.."B ]")
+			outputDebugString("[NativeUI]File Got ("..UpdateCount.."/"..#preUpdate.."): "..path.." [ "..size.."B -> "..newsize.."B ]")
 		else
-			outputDebugString("[DGS]Download Failed: "..path.." ("..err..")!",2)
+			outputDebugString("[NativeUI]Download Failed: "..path.." ("..err..")!",2)
 		end
 		if preUpdate[UpdateCount+1] then
 			DownloadFiles()
@@ -182,10 +183,6 @@ function DownloadFiles()
 		end
 	end,"",false,preUpdate[UpdateCount])
 end
-
-
-
-
 
 function DownloadFinish()
 	outputDebugString("[NativeUI]Changing Config File")
