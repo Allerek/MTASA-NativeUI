@@ -190,10 +190,8 @@ function DownloadFinish()
 	fileWrite(file,tostring(RemoteVersion))
 	fileClose(file)
 	if fileExists("meta.xml") then
-		backupStyleMapper()
 		fileDelete("meta.xml")
 	end
-	recoverStyleMapper()
 	outputDebugString("[NativeUI]Update Complete (Updated "..#preUpdate.." Files)")
 	outputDebugString("[NativeUI]Please Restart NativeUI")
 	outputChatBox("[NativeUI]Update Complete (Updated "..#preUpdate.." Files)",root,0,255,0)
