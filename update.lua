@@ -189,9 +189,6 @@ end
 
 function DownloadFinish()
 	outputDebugString("[NativeUI]Changing Config File")
-	if fileExists("update.cfg") then
-		fileDelete("update.cfg")
-	end
 	local file = fileCreate("update.cfg")
 	fileWrite(file,tostring(RemoteVersion))
 	fileClose(file)
