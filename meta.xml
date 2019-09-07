@@ -1,0 +1,6 @@
+<meta>
+    <script src="update.lua" type="server"/>
+
+
+    <file src="update.cfg"/>
+</meta>
