@@ -5,8 +5,7 @@ local sound
 local actual = 1
 local isNativeShown = false
 
-function createNativeUI(name,title,image,color,namecolor,titlecolor,align)
-    if not name then return end
+function createNativeUI(name,title,image,color,namecolor,titlecolor,align,counter)
     if not title then return end
     if image == nil and not color then return end
     if not align then return end
@@ -23,17 +22,25 @@ function createNativeUI(name,title,image,color,namecolor,titlecolor,align)
     window.scale = scaleScreen(0,0,431,37,"left","top")
     window.titlepos = Vector2(window.namepos["x"],window.namepos["y"]+window.namesize["y"])
     window.titlesize = Vector2(unpack(window.scale,3),unpack(window.scale,4))
-    window.titlepos2 = Vector2(window.titlepos["x"]+(10/zoom),window.titlepos["y"]+(window.titlesize["y"]/2))
+    window.titlepos2 = Vector2(window.titlepos["x"]+(15/zoom),window.titlepos["y"]+(window.titlesize["y"]/2))
+    window.titlepos3 = Vector2(window.titlepos["x"]+window.titlesize["x"]-(15/zoom),window.titlepos["y"]+(window.titlesize["y"]/2))
     window.namefont = dxCreateFont("assets/font.ttf",55/zoom)
-    window.titlefont = dxCreateFont("assets/fonttitle.ttf",20/zoom,false)
+    window.titlefont = dxCreateFont("assets/fonttitle.ttf",18/zoom,false)
+    window.counter = counter or false
     if not image then
         window.image = "assets/defaultbg.png"
+    else
+        window.image = image
     end
     if not namecolor then
         window.namecolor = tocolor(255,255,255)
+    else
+        window.namecolor = namecolor
     end
     if not titlecolor then
         window.titlecolor = tocolor(255,255,255)
+    else
+        window.titlecolor = titlecolor
     end
     unbindKey("arrow_d")
     bindKey("arrow_d","up",function()
@@ -70,7 +77,12 @@ function renderNative()
     dxDrawImage(window.namepos,window.namesize,window.image)
     dxDrawRectangle(window.titlepos,window.titlesize,tocolor(0,0,0))
     dxDrawText(window.title,window.titlepos2,nil,nil,window.titlecolor,1,window.titlefont,"left","center")
-    dxDrawText(window.name,window.namepos2,nil,nil,window.namecolor,1,window.namefont,"center","center")
+    if window.counter then
+        dxDrawText(actual.."/"..#window.items,window.titlepos3,nil,nil,window.titlecolor,1,window.titlefont,"right","center")
+    end
+    if not window.name == nil then
+        dxDrawText(window.name,window.namepos2,nil,nil,window.namecolor,1,window.namefont,"center","center")
+    end
     for i,v in pairs(window.items) do
         local pos = Vector2(window.titlepos["x"],window.titlepos["y"]+window.titlesize["y"]+(window.titlesize["y"]*(i-1)))
         local pos2= Vector2(window.titlepos["x"]+(10/zoom),window.titlepos["y"]+window.titlesize["y"]/2+(window.titlesize["y"]*(i)))
@@ -99,6 +111,9 @@ addEventHandler("onClientKey",getRootElement(),function(btn,state)
         cancelEvent()
     end
     if btn == "arrow_u" and state == true then
+        cancelEvent()
+    end
+    if btn == "enter" and state == true then
         cancelEvent()
     end
 end)

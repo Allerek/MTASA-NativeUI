@@ -1,6 +1,12 @@
 <meta>
     <script src="update.lua" type="server"/>
-
+    <script src="test.lua" type="client"/>
+    <script src="main.lua" type="client"/>
+    <script src="scale.lua" type="client"/>
 
     <file src="update.cfg"/>
+    <file src="assets/defaultbg.png"/>
+    <file src="assets/font.ttf"/>
+    <file src="assets/fonttitle.ttf"/>
+    <file src="assets/change.wav"/>
 </meta>

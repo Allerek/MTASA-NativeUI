@@ -1,6 +1,6 @@
 addEventHandler("onClientResourceStart",resourceRoot,function()
-    createNativeUI("Pseudol Santus","Neku umar",nil,tocolor(255,255,255),tocolor(255,255,255),tocolor(255,255,255),"right")
-    for i=1,10 do
+    createNativeUI(nil,"Neku umar","assets/24.png",tocolor(255,255,255),tocolor(0,0,0),tocolor(255,255,255),"right",true)
+    for i=1,15 do
         addNativePlaceholder("This is ąężźćłó ["..i.."]")
     end
 end)
