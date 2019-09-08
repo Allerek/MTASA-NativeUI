@@ -57,9 +57,15 @@ function createNativeUI(name,title,image,color,namecolor,titlecolor,align,counte
     addEventHandler("onClientRender",getRootElement(),renderNative)
 end
 
-function addNativePlaceholder(text)
+function addNativePlaceholder(text,color)
+    if not color then
+         color = false
+    else
+        color = tocolor(getColorFromString(color))
+    end
     local table = {
         ["type"] = "placeholder",
+        ["color"] = color,
         ["text"] = text
     }
     window.items[#window.items+1] = table
@@ -85,7 +91,11 @@ function renderNative()
             textcolor = tocolor(0,0,0,255) 
         else
             color = tocolor(0,0,0,255-multiplier)
-            textcolor = tocolor(255,255,255)
+            if v.color == false then
+                textcolor = tocolor(255,255,255)
+            else
+                textcolor = v.color
+            end
         end
         dxDrawRectangle(pos,window.titlesize,color)
         dxDrawText(v.text,pos2,nil,nil,textcolor,1,window.titlefont,"left","center")

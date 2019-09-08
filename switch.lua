@@ -1,10 +1,16 @@
 addEvent("onClientAcceptSwitch",true)
 addEvent("onClientChangeSwitch",true)
 
-function addNativeSwitch(text,values)
+function addNativeSwitch(text,values,color)
+    if not color then
+        color = false
+   else
+       color = tocolor(getColorFromString(color))
+   end
     local table = {
         ["type"] = "switch",
         ["text"] = text,
+        ["color"] = color,
         ["value"] = values,
         ["actual"] = 1,
     }
