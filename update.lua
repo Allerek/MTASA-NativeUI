@@ -109,7 +109,7 @@ function getGitHubTree(path,nextPath)
 			local theTable = fromJSON(data)
 			folderGetting[theTable.sha] = nil
 			for k,v in pairs(theTable.tree) do
-				--if v.path ~= "meta.xml" then
+				if v.path ~= "meta.xml" then
 				local thePath = nextPath..(v.path)
 					if v.mode == "040000" then
 						folderGetting[v.sha] = true
@@ -117,7 +117,7 @@ function getGitHubTree(path,nextPath)
 					else
 						fileHash[thePath] = v.sha
 					end
-				--end
+				end
 			end
 			if not next(folderGetting) then
 				checkFiles()
@@ -133,7 +133,7 @@ function checkFiles()
 	for k,v in pairs(xmlNodeGetChildren(xml)) do
 		if xmlNodeGetName(v) == "script" or xmlNodeGetName(v) == "file" then
 			local path = xmlNodeGetAttribute(v,"src")
-			if --[[path ~= "meta.xml" and]] path ~= "update.cfg" then
+			if path ~= "meta.xml" and path ~= "update.cfg" then
 				local sha = ""
 				if fileExists(path) then
 					local file = fileOpen(path)
@@ -190,7 +190,6 @@ function DownloadFinish()
 	fileWrite(file,tostring(RemoteVersion))
 	fileClose(file)
 	if fileExists("meta.xml") and fileExists("updated/meta.xml") then
-		print("shit")
 		fileDelete("meta.xml")
 		fileCopy("updated/meta.xml","meta.xml",true)
 	end
