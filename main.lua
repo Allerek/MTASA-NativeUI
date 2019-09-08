@@ -8,10 +8,18 @@ isNativeShown = false
 switch={}
 
 function createNativeUI(name,title,image,color,namecolor,titlecolor,align,counter)
-    if not title then return end
+    if not name == nil and not name == "" then
+        assert(type(name) == string,"Bad argument @ createNativeUI [expected string at argument 1, got "..type(name).." '"..name.."'']")
+    end
+    if not title then
+        title = "Native UI"
+    end
+    assert(title and tostring(title),"Bad argument @ createNativeUI [expected string at argument 2, got "..type(title).." '"..title.."'']")
     if image == nil and not color then return end
-    if not align then return end
-    assert(align == "left" or align == "right","Invalid align type @ createNativeUI ('left'/'right' expected, got " .. align .. ")")
+    if not align then 
+        align = "right"
+    end
+    assert(align == "left" or align == "right","Invalid align type @ createNativeUI [expected 'left'/'right' at argument 7, got"..type(align).." '"..align.."'']")
     window = {}
     window.items={}
     zoom = getZoom()
@@ -70,7 +78,7 @@ function renderNative()
     for i,v in pairs(window.items) do
         if i > 15 then return end        
         local pos = Vector2(window.titlepos["x"],window.titlepos["y"]+window.titlesize["y"]+(window.titlesize["y"]*(i-1)))
-        local pos2 = Vector2(window.titlepos["x"]+(10/zoom),window.titlepos["y"]+window.titlesize["y"]/2+(window.titlesize["y"]*(i)))
+        local pos2 = Vector2(window.titlepos["x"]+(15/zoom),window.titlepos["y"]+window.titlesize["y"]/2+(window.titlesize["y"]*(i)))
         local multiplier = 255*(0.03*i)
         if actual == i then
             color = tocolor(255,255,255,255*0.6)
@@ -87,15 +95,9 @@ function renderNative()
             dxDrawText("⮜ "..v.value[actual].." ⮞",pos2,nil,nil,textcolor,1,window.titlefont,"right","center")
         end
     end
-    if actual > #window.items then
-        actual = 1
-    end
-    if actual == 0 then
-        actual = #window.items
-    end
 end
 
-function removeNativePlaceholder(id)
+function removeNativeItem(id)
     table.remove(window.items,id)
 end
 
@@ -122,12 +124,21 @@ end)
 function bindKeys()
     bindKey("arrow_d","up",function()
         if not isNativeShown then return end
-        actual = actual+1
+        if actual+1 > #window.items then
+            actual = 1
+        else
+            actual = actual+1
+        end
         playNativeSound()
     end)
     bindKey("arrow_u","up",function()
         if not isNativeShown then return end
-        actual = actual-1
+        if actual == 0 then
+            actual = #window.items
+        else
+            actual = actual-1
+        end
+        
         playNativeSound()
     end)
     bindKey("arrow_r","up",function()
