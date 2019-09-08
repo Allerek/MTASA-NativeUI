@@ -1,17 +1,21 @@
-window = {
+local window = {
     options={}
 }
-
+local sound
+local actual = 1
+local isNativeShown = false
 
 function createNativeUI(name,title,image,color,namecolor,titlecolor,align)
     if not name then return end
     if not title then return end
     if image == nil and not color then return end
     if not align then return end
-    if align ~= "left" and align ~= "right" then return end
+    assert(align == "left" or align == "right","Invalid align type @ createNativeUI ('left'/'right' expected, got " .. align .. ")")
     window = {}
+    window.items={}
     zoom = getZoom()
     window.name = name
+    window.title = title
     window.scale = scaleScreen(10,10,431,107,align,"top")
     window.namepos = Vector2(unpack(window.scale,1),unpack(window.scale,2)) 
     window.namesize = Vector2(unpack(window.scale,3),unpack(window.scale,4))
@@ -31,7 +35,27 @@ function createNativeUI(name,title,image,color,namecolor,titlecolor,align)
     if not titlecolor then
         window.titlecolor = tocolor(255,255,255)
     end
-    window.options={}
+    unbindKey("arrow_d")
+    bindKey("arrow_d","up",function()
+        actual = actual+1
+        if isElement(sound) then
+            destroyElement(sound)
+            sound = playSound("assets/change.wav",false)
+        else
+            sound = playSound("assets/change.wav",false)
+        end
+    end)
+    bindKey("arrow_u","up",function()
+        actual = actual-1
+        if isElement(sound) then
+            destroyElement(sound)
+            sound = playSound("assets/change.wav",false)
+        else
+            sound = playSound("assets/change.wav",false)
+        end
+    end)
+    isNativeShown = true
+    addEventHandler("onClientRender",getRootElement(),renderNative)
 end
 
 function addNativePlaceholder(text)
@@ -39,18 +63,42 @@ function addNativePlaceholder(text)
         ["type"] = "placeholder",
         ["value"] = text
     }
-    window.options[#window.options+1]=table
+    window.items[#window.items+1]=table
 end
 
-addEventHandler("onClientRender",getRootElement(),function()
+function renderNative()
     dxDrawImage(window.namepos,window.namesize,window.image)
     dxDrawRectangle(window.titlepos,window.titlesize,tocolor(0,0,0))
-    dxDrawText(window.name,window.titlepos2,nil,nil,window.titlecolor,1,window.titlefont,"left","center")
+    dxDrawText(window.title,window.titlepos2,nil,nil,window.titlecolor,1,window.titlefont,"left","center")
     dxDrawText(window.name,window.namepos2,nil,nil,window.namecolor,1,window.namefont,"center","center")
-    for i,v in pairs(window.options) do
+    for i,v in pairs(window.items) do
         local pos = Vector2(window.titlepos["x"],window.titlepos["y"]+window.titlesize["y"]+(window.titlesize["y"]*(i-1)))
         local pos2= Vector2(window.titlepos["x"]+(10/zoom),window.titlepos["y"]+window.titlesize["y"]/2+(window.titlesize["y"]*(i)))
-        dxDrawRectangle(pos,window.titlesize,tocolor(0,0,0,255*0.6))
-        dxDrawText(v.value,pos2,nil,nil,tocolor(255,255,255),1,window.titlefont,"left","center")
+        local multiplier = 255*(0.03*i)
+        if actual == i then
+            color = tocolor(255,255,255,255)
+            textcolor = tocolor(0,0,0,255) 
+        else
+            color = tocolor(0,0,0,255-multiplier)
+            textcolor = tocolor(255,255,255)
+        end
+        dxDrawRectangle(pos,window.titlesize,color)
+        dxDrawText(v.value,pos2,nil,nil,textcolor,1,window.titlefont,"left","center")
+    end
+    if actual > #window.items then
+        actual = 1
+    end
+    if actual == 0 then
+        actual = #window.items
+    end
+end
+
+addEventHandler("onClientKey",getRootElement(),function(btn,state)
+    if not isNativeShown then return end 
+    if btn == "arrow_d" and state == true then
+        cancelEvent()
+    end
+    if btn == "arrow_u" and state == true then
+        cancelEvent()
     end
 end)
