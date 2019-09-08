@@ -43,24 +43,7 @@ function createNativeUI(name,title,image,color,namecolor,titlecolor,align,counte
         window.titlecolor = titlecolor
     end
     unbindKey("arrow_d")
-    bindKey("arrow_d","up",function()
-        actual = actual+1
-        if isElement(sound) then
-            destroyElement(sound)
-            sound = playSound("assets/change.wav",false)
-        else
-            sound = playSound("assets/change.wav",false)
-        end
-    end)
-    bindKey("arrow_u","up",function()
-        actual = actual-1
-        if isElement(sound) then
-            destroyElement(sound)
-            sound = playSound("assets/change.wav",false)
-        else
-            sound = playSound("assets/change.wav",false)
-        end
-    end)
+    
     isNativeShown = true
     addEventHandler("onClientRender",getRootElement(),renderNative)
 end
@@ -88,7 +71,7 @@ function renderNative()
         local pos2= Vector2(window.titlepos["x"]+(10/zoom),window.titlepos["y"]+window.titlesize["y"]/2+(window.titlesize["y"]*(i)))
         local multiplier = 255*(0.03*i)
         if actual == i then
-            color = tocolor(255,255,255,255)
+            color = tocolor(255,255,255,255*0.6)
             textcolor = tocolor(0,0,0,255) 
         else
             color = tocolor(0,0,0,255-multiplier)
@@ -115,5 +98,23 @@ addEventHandler("onClientKey",getRootElement(),function(btn,state)
     end
     if btn == "enter" and state == true then
         cancelEvent()
+    end
+    if btn == "arrow_u" and state == false then
+        actual = actual-1
+        if isElement(sound) then
+            destroyElement(sound)
+            sound = playSound("assets/change.wav",false)
+        else
+            sound = playSound("assets/change.wav",false)
+        end
+    end
+    if btn == "arrow_d" and state == false then
+        actual = actual+1
+        if isElement(sound) then
+            destroyElement(sound)
+            sound = playSound("assets/change.wav",false)
+        else
+            sound = playSound("assets/change.wav",false)
+        end
     end
 end)
