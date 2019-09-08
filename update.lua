@@ -133,7 +133,7 @@ function checkFiles()
 	for k,v in pairs(xmlNodeGetChildren(xml)) do
 		if xmlNodeGetName(v) == "script" or xmlNodeGetName(v) == "file" then
 			local path = xmlNodeGetAttribute(v,"src")
-			if path ~= "meta.xml" then
+			if path ~= "meta.xml" and path ~= "update.cfg" then
 				local sha = ""
 				if fileExists(path) then
 					local file = fileOpen(path)
