@@ -1,4 +1,5 @@
 addEvent("onClientAcceptSwitch",true)
+addEvent("onClientChangeSwitch",true)
 
 function addNativeSwitch(text,values)
     local table = {

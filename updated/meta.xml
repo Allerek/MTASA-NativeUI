@@ -1,8 +1,9 @@
 <meta>
     <script src="update.lua" type="server"/>
-    <script src="test.lua" type="client"/>
     <script src="main.lua" type="client"/>
+    <script src="switch.lua" type="client"/>
     <script src="scale.lua" type="client"/>
+    <script src="test.lua" type="client"/>
 
     <file src="update.cfg"/>
     <file src="assets/defaultbg.png"/>
