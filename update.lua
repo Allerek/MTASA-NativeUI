@@ -198,3 +198,27 @@ function DownloadFinish()
 	FetchCount = 0
 	preFetch = 0
 end
+
+addCommandHandler("nativever",function(pla,cmd)
+	local vsdd
+	if fileExists("update.cfg") then
+		local file = fileOpen("update.cfg")
+		local vscd = fileRead(file,fileGetSize(file))
+		fileClose(file)
+		vsdd = tonumber(vscd)
+		if vsdd then
+			outputDebugString("[NativeUI]Version: "..vsdd,3)
+		else
+			outputDebugString("[NativeUI]Version State is damaged! Please use /updatedgs to update",1)
+		end
+	else
+		outputDebugString("[NativeUI]Version State is damaged! Please use /updatedgs to update",1)
+	end
+	if getPlayerName(pla) ~= "Console" then
+		if vsdd then
+			outputChatBox("[NativeUI]Version: "..vsdd,pla,0,255,0)
+		else
+			outputChatBox("[NativeUI]Version State is damaged! Please use /updatedgs to update",pla,255,0,0)
+		end
+	end
+end)
