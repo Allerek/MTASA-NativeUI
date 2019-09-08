@@ -133,7 +133,7 @@ function bindKeys()
     end)
     bindKey("arrow_u","up",function()
         if not isNativeShown then return end
-        if actual-1 < 0 then
+        if actual-1 < 1 then
             actual = #window.items
         else
             actual = actual-1
