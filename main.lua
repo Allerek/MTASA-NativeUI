@@ -135,6 +135,7 @@ function bindKeys()
         if not isNativeShown then return end
         if actual-1 < 1 then
             actual = #window.items
+                print("elo")
         else
             actual = actual-1
         end
