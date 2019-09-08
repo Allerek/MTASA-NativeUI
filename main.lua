@@ -8,7 +8,7 @@ isNativeShown = false
 switch={}
 
 function createNativeUI(name,title,image,color,namecolor,titlecolor,align,counter)
-    if not name == nil and not name == "" then
+    if name == "" then
         assert(type(name) == string,"Bad argument @ createNativeUI [expected string at argument 1, got "..type(name).." '"..name.."'']")
     end
     if not title then
@@ -72,7 +72,7 @@ function renderNative()
     if window.counter then
         dxDrawText(actual.."/"..#window.items,window.titlepos3,nil,nil,window.titlecolor,1,window.titlefont,"right","center")
     end
-    if not window.name == nil then
+    if window.name then
         dxDrawText(window.name,window.namepos2,nil,nil,window.namecolor,1,window.namefont,"center","center")
     end
     for i,v in pairs(window.items) do
@@ -174,8 +174,3 @@ function playNativeSound()
         sound = playSound("assets/change.wav",false)
     end
 end
-
-
-
-
-
