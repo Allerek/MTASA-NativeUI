@@ -28,7 +28,7 @@ function createNativeUI(name,title,image,color,namecolor,titlecolor,align,counte
     window.scale = scaleScreen(10,10,431,107,align,"top")
     window.namepos = Vector2(unpack(window.scale,1),unpack(window.scale,2)) 
     window.namesize = Vector2(unpack(window.scale,3),unpack(window.scale,4))
-    window.namepos2 = Vector2(window.namepos["x"]+(window.namesize["x"]/2),window.namepos["y"]+(window.namesize["y"]/2))
+    window.namepos2 = Vector2(window.namepos["x"]+(window.namesize["x"]/2),window.namepos["y"]+(window.namesize["y"]/1.75))
     window.scale = scaleScreen(0,0,431,37,"left","top")
     window.titlepos = Vector2(window.namepos["x"],window.namepos["y"]+window.namesize["y"])
     window.titlesize = Vector2(unpack(window.scale,3),unpack(window.scale,4))
@@ -146,6 +146,9 @@ function bindKeys()
             window.items[actual].actual = window.items[actual].actual+1
             if window.items[actual].actual > #window.items[actual].value then window.items[actual].actual = 1 end
             playNativeSound()
+            local actualswitch = window.items[actual].actual
+            local actualswitch = window.items[actual].value[tonumber(actualswitch)]
+            triggerEvent("onClientChangeSwitch",localPlayer,actual,actualswitch)
         end
     end)
     bindKey("arrow_l","up",function()
