@@ -1,11 +1,12 @@
 window = {
     options={}
 }
+
 local sound
 local actual = 1
 isNativeShown = false
-tick = 0
 switch={}
+
 function createNativeUI(name,title,image,color,namecolor,titlecolor,align,counter)
     if not title then return end
     if image == nil and not color then return end
@@ -54,17 +55,6 @@ function addNativePlaceholder(text)
         ["text"] = text
     }
     window.items[#window.items+1] = table
-end
-
-function addNativeSwitch(text,values)
-    local table = {
-        ["type"] = "switch",
-        ["text"] = text,
-        ["value"] = values,
-        ["actual"] = 1,
-    }
-    window.items[#window.items+1] = table
-    
 end
 
 function renderNative()
@@ -143,7 +133,6 @@ function bindKeys()
     bindKey("arrow_r","up",function()
         if window.items[actual].type == "switch" then
             window.items[actual].actual = window.items[actual].actual+1
-            
             if window.items[actual].actual > #window.items[actual].value then window.items[actual].actual = 1 end
             playNativeSound()
         end
@@ -151,9 +140,17 @@ function bindKeys()
     bindKey("arrow_l","up",function()
         if window.items[actual].type == "switch" then
             window.items[actual].actual = window.items[actual].actual-1
-            
             if window.items[actual].actual < 1 then window.items[actual].actual = #window.items[actual].value end
             playNativeSound()
+        end
+    end)
+    bindKey("enter","up",function()
+        if window.items[actual].type == "switch" then
+            local actualswitch = window.items[actual].actual
+            local actualswitch = window.items[actual].value[tonumber(actualswitch)]
+            
+            triggerEvent("onClientAcceptSwitch",localPlayer,actual,actualswitch)
+            
         end
     end)
 end
@@ -166,3 +163,8 @@ function playNativeSound()
         sound = playSound("assets/change.wav",false)
     end
 end
+
+
+
+
+
