@@ -1,10 +1,11 @@
-local window = {
+window = {
     options={}
 }
 local sound
 local actual = 1
-local isNativeShown = false
-
+isNativeShown = false
+tick = 0
+switch={}
 function createNativeUI(name,title,image,color,namecolor,titlecolor,align,counter)
     if not title then return end
     if image == nil and not color then return end
@@ -42,8 +43,7 @@ function createNativeUI(name,title,image,color,namecolor,titlecolor,align,counte
     else
         window.titlecolor = titlecolor
     end
-    unbindKey("arrow_d")
-    
+    bindKeys()
     isNativeShown = true
     addEventHandler("onClientRender",getRootElement(),renderNative)
 end
@@ -51,9 +51,20 @@ end
 function addNativePlaceholder(text)
     local table = {
         ["type"] = "placeholder",
-        ["value"] = text
+        ["text"] = text
     }
-    window.items[#window.items+1]=table
+    window.items[#window.items+1] = table
+end
+
+function addNativeSwitch(text,values)
+    local table = {
+        ["type"] = "switch",
+        ["text"] = text,
+        ["value"] = values,
+        ["actual"] = 1,
+    }
+    window.items[#window.items+1] = table
+    
 end
 
 function renderNative()
@@ -67,8 +78,9 @@ function renderNative()
         dxDrawText(window.name,window.namepos2,nil,nil,window.namecolor,1,window.namefont,"center","center")
     end
     for i,v in pairs(window.items) do
+        if i > 15 then return end        
         local pos = Vector2(window.titlepos["x"],window.titlepos["y"]+window.titlesize["y"]+(window.titlesize["y"]*(i-1)))
-        local pos2= Vector2(window.titlepos["x"]+(10/zoom),window.titlepos["y"]+window.titlesize["y"]/2+(window.titlesize["y"]*(i)))
+        local pos2 = Vector2(window.titlepos["x"]+(10/zoom),window.titlepos["y"]+window.titlesize["y"]/2+(window.titlesize["y"]*(i)))
         local multiplier = 255*(0.03*i)
         if actual == i then
             color = tocolor(255,255,255,255*0.6)
@@ -78,7 +90,12 @@ function renderNative()
             textcolor = tocolor(255,255,255)
         end
         dxDrawRectangle(pos,window.titlesize,color)
-        dxDrawText(v.value,pos2,nil,nil,textcolor,1,window.titlefont,"left","center")
+        dxDrawText(v.text,pos2,nil,nil,textcolor,1,window.titlefont,"left","center")
+        if v.type == "switch" then
+            local pos2 = Vector2(window.titlepos["x"]+window.titlesize["x"]-(15/zoom),window.titlepos["y"]+window.titlesize["y"]/2+(window.titlesize["y"]*(i)))
+            local actual = tonumber(v.actual)
+            dxDrawText("⮜ "..v.value[actual].." ⮞",pos2,nil,nil,textcolor,1,window.titlefont,"right","center")
+        end
     end
     if actual > #window.items then
         actual = 1
@@ -86,6 +103,10 @@ function renderNative()
     if actual == 0 then
         actual = #window.items
     end
+end
+
+function removeNativePlaceholder(id)
+    table.remove(window.items,id)
 end
 
 addEventHandler("onClientKey",getRootElement(),function(btn,state)
@@ -96,25 +117,52 @@ addEventHandler("onClientKey",getRootElement(),function(btn,state)
     if btn == "arrow_u" and state == true then
         cancelEvent()
     end
+    if btn == "arrow_r" and state == true then
+        cancelEvent()
+    end
+    if btn == "arrow_l" and state == true then
+        cancelEvent()
+    end
     if btn == "enter" and state == true then
         cancelEvent()
     end
-    if btn == "arrow_u" and state == false then
-        actual = actual-1
-        if isElement(sound) then
-            destroyElement(sound)
-            sound = playSound("assets/change.wav",false)
-        else
-            sound = playSound("assets/change.wav",false)
-        end
-    end
-    if btn == "arrow_d" and state == false then
-        actual = actual+1
-        if isElement(sound) then
-            destroyElement(sound)
-            sound = playSound("assets/change.wav",false)
-        else
-            sound = playSound("assets/change.wav",false)
-        end
-    end
 end)
+
+
+function bindKeys()
+    bindKey("arrow_d","up",function()
+        if not isNativeShown then return end
+        actual = actual+1
+        playNativeSound()
+    end)
+    bindKey("arrow_u","up",function()
+        if not isNativeShown then return end
+        actual = actual-1
+        playNativeSound()
+    end)
+    bindKey("arrow_r","up",function()
+        if window.items[actual].type == "switch" then
+            window.items[actual].actual = window.items[actual].actual+1
+            
+            if window.items[actual].actual > #window.items[actual].value then window.items[actual].actual = 1 end
+            playNativeSound()
+        end
+    end)
+    bindKey("arrow_l","up",function()
+        if window.items[actual].type == "switch" then
+            window.items[actual].actual = window.items[actual].actual-1
+            
+            if window.items[actual].actual < 1 then window.items[actual].actual = #window.items[actual].value end
+            playNativeSound()
+        end
+    end)
+end
+
+function playNativeSound()
+    if isElement(sound) then
+        destroyElement(sound)
+        sound = playSound("assets/change.wav",false)
+    else
+        sound = playSound("assets/change.wav",false)
+    end
+end
