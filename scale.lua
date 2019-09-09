@@ -27,8 +27,8 @@ function scaleScreen(x, y, w, h, alignX, alignY)
     w = w/zoom
     h = h/zoom
     assert( (string.lower(alignX) == "left" or string.lower(alignX) == "center" or string.lower(alignX) == "right") , "Bad argument 5 @ scaleScreen (invalid type alignment X)")
-    assert( (string.lower(alignY) == "top" or string.lower(alignY) == "center" or string.lower(alignY) == "bottom") , "Bad argument 5 @ scaleScreen (invalid type alignment X)")    
-    
+    assert( (string.lower(alignY) == "top" or string.lower(alignY) == "center" or string.lower(alignY) == "bottom") , "Bad argument 5 @ scaleScreen (invalid type alignment X)")
+
     -- assert(alignX, "Bad argument @ 'scaleScreen' [Execpted string at argument 5, got none]")
     -- assert(alignY, "Bad argument @ 'scaleScreen' [Execpted string at argument 5, got none]")
     if alignX == "left" then
