@@ -175,6 +175,9 @@ function bindKeys()
             window.items[actual].actual = window.items[actual].actual-1
             if window.items[actual].actual < 1 then window.items[actual].actual = #window.items[actual].value end
             playNativeSound()
+            local actualswitch = window.items[actual].actual
+            local actualswitch = window.items[actual].value[tonumber(actualswitch)]
+            triggerEvent("onClientChangeSwitch", localPlayer, actual, actualswitch)
         end
     end)
     bindKey("enter", "up", function()
