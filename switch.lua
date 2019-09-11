@@ -22,3 +22,17 @@ function getSwitchText(id)
     local actualswitch = window.items[id].value[tonumber(actualswitch)]
     return actualswitch
 end
+
+function setNativeSwitchSelection(id,selection)
+    if not id or not selection then return end
+    assert(tonumber(id),"Bad argument @ setNativeButtonIcon [expected number at argument 1,  got "..type(id).." '"..id.."'']")
+    if window.items[id].type ~= "switch" then return end
+    itemindex = 1
+    for i,v in pairs(window.items[id].value) do
+        if v == selection then
+            print(i)
+            itemindex = i
+        end
+    end
+    window.items[id].actual = itemindex
+end
