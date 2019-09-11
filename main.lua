@@ -7,6 +7,9 @@ local actual = 1
 isNativeShown = false
 switch={}
 
+-- Button Events
+addEvent("onClientAcceptButton", true)
+
 function createNativeUI(name, title, image, color, namecolor, titlecolor, align, counter, scroll, scrollitems, namealign)
     if isNativeShown then return false end
     if name == "" then
@@ -196,6 +199,10 @@ function bindKeys()
             local actualswitch = window.items[actual].value[tonumber(actualswitch)]
             triggerEvent("onClientAcceptSwitch", localPlayer, actual, actualswitch)
         end
+        if window.items[actual].type == "button" then
+            local btntext = window.items[actual].text
+            triggerEvent("onClientAcceptButton", localPlayer, actual, btntext)
+        end
     end)
 end
 
@@ -258,4 +265,3 @@ function removeNativeButtonIcon(id)
     assert(tonumber(id),"Bad argument @ setNativeButtonIcon [expected number at argument 1,  got "..type(id).." '"..id.."'']")
     window.items[id].icon = false
 end
-
