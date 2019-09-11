@@ -6,7 +6,7 @@ addEventHandler("onClientResourceStart", resourceRoot, function()
         else
             icontype = "ammo"
         end
-        addNativeButton("This is Вот,  держи ["..i.."]", "#ff9800",icontype)
+        addNativeButton("Fucking ["..i.."]", "#ff9800",icontype)
         addNativeSwitch("Switch Test", {"Ketchup", "Majonez"})
     end
     setTimer(function()
@@ -19,4 +19,7 @@ addEventHandler("onClientAcceptSwitch", getRootElement(), function(id, value)
 end)
 addEventHandler("onClientChangeSwitch", getRootElement(), function(id, value)
     print(value)
+end)
+addEventHandler("onClientAcceptButton", getRootElement(), function(id, text)
+    print(id, text)
 end)
