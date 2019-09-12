@@ -115,12 +115,20 @@ function renderNative()
             end
 
             if v.type == "checkbox" then
-                if v.checked == true then 
+                if v.actual == 1 then
                     checkicon = "accept"
-                    imgtype = 1
-                else
+                    if actual-window.scrollitems*(getCurrentNativePage()-1) == i then
+                        imgtype = 2
+                    else
+                        imgtype = 1
+                    end
+                elseif v.actual == 0 then
                     checkicon = "box"
-                    imgtype = 0
+                    if actual-window.scrollitems*(getCurrentNativePage()-1) == i then
+                        imgtype = 2
+                    else
+                        imgtype = 1
+                    end
                 end
 
                 local pos = Vector2(window.titlepos["x"]+window.titlesize["x"]-(60/zoom), window.titlepos["y"]+window.titlesize["y"]/2+(window.titlesize["y"]*(i-1))+(12/zoom))
@@ -223,12 +231,12 @@ function bindKeys()
             triggerEvent("onClientAcceptButton", localPlayer, actual, btntext)
         end
         if window.items[actual].type == "checkbox" then
-            if window.items[actual].checked == true then 
-                window.items[actual].checked = false
-                triggerEvent("onClientCheckBoxChange", localPlayer, actual, window.items[actual].checked)
+            if window.items[actual].actual == 1 then 
+                window.items[actual].actual = 0
+                triggerEvent("onClientCheckBoxChange", localPlayer, actual, window.items[actual].actual)
             else
-                window.items[actual].checked = true
-                triggerEvent("onClientCheckBoxChange", localPlayer, actual, window.items[actual].checked)
+                window.items[actual].actual = 1
+                triggerEvent("onClientCheckBoxChange", localPlayer, actual, window.items[actual].actual)
             end
         end
     end)
@@ -264,47 +272,3 @@ function removeNativeUI()
     isNativeShown = false
 end
 
-function addNativeButton(text, color,icon)
-    if icon then
-        assert(icon ~= "box","Invalid icon type @ addNativeButton [got"..type(icon).." '"..icon.."'']")
-    end
-    if type(color) == "string" then
-        color = tocolor(getColorFromString(color))
-    end
-    color = color or tocolor(255, 255, 255)
-    local table = {
-        ["type"] = "button",
-        ["color"] = color,
-        ["text"] = text,
-        ["icon"] = icon or false
-    }
-    window.items[#window.items+1] = table
-end
-
-function setNativeButtonIcon(id,icon)
-    if not id or not icon then return end
-    assert(tonumber(id),"Bad argument @ setNativeButtonIcon [expected number at argument 1,  got "..type(id).." '"..id.."'']")
-    assert(icon ~= "box","Invalid icon type @ addNativeButton [got"..type(icon).." '"..icon.."'']")
-    window.items[id].icon = icon
-end
-
-function removeNativeButtonIcon(id)
-    if not id then return end
-    assert(tonumber(id),"Bad argument @ setNativeButtonIcon [expected number at argument 1,  got "..type(id).." '"..id.."'']")
-    window.items[id].icon = false
-end
-
-function addNativeCheckBox(text, color, check)
-    if type(color) == "string" then
-        color = tocolor(getColorFromString(color))
-    end
-    color = color or tocolor(255, 255, 255)
-    local table = {
-        ["type"] = "checkbox",
-        ["color"] = color,
-        ["text"] = text,
-        ["checked"] = check
-    }
-
-    window.items[#window.items+1] = table
-end

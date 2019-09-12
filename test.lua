@@ -6,7 +6,7 @@ addEventHandler("onClientResourceStart", resourceRoot, function()
         else
             icontype = "ammo"
         end
-        addNativeCheckBox("CheckBox ["..i.."]", "#ff9800", false)
+        addNativeCheckBox("CheckBox ["..i.."]", "#ff9800", 0)
         addNativeButton("Button ["..i.."]", "#ff9800",icontype)
         addNativeSwitch("Switch ["..i.."]", {"Ketchup", "Majonez"})
     end

@@ -2,6 +2,8 @@
     <script src="update.lua" type="server"/>
     <script src="main.lua" type="client"/>
     <script src="switch.lua" type="client"/>
+    <script src="checkbox.lua" type="client"/>
+    <script src="button.lua" type="client"/>
     <script src="scale.lua" type="client"/>
     <script src="test.lua" type="client"/>
 
@@ -21,7 +23,6 @@
     <file src="assets/icons/art2.png"/>
     <file src="assets/icons/barber1.png"/>
     <file src="assets/icons/barber2.png"/>
-    <file src="assets/icons/box0.png"/>
     <file src="assets/icons/box1.png"/>
     <file src="assets/icons/box2.png"/>
     <file src="assets/icons/clothing1.png"/>

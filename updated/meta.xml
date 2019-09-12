@@ -7,8 +7,24 @@
 
     <file src="update.cfg"/>
     <file src="assets/defaultbg.png"/>
-    <file src="assets/font.ttf"/>
-    <file src="assets/fonttitle.ttf"/>
+    <file src="assets/fonts/font.ttf"/>
+    <file src="assets/fonts/fonttitle.ttf"/>
     <file src="assets/change.wav"/>
     <file src="assets/24.png"/>
+    <file src="assets/icons/accept1.png"/>
+    <file src="assets/icons/accept2.png"/>
+    <file src="assets/icons/ammo1.png"/>
+    <file src="assets/icons/ammo2.png"/>
+    <file src="assets/icons/armour1.png"/>
+    <file src="assets/icons/armour2.png"/>
+    <file src="assets/icons/art1.png"/>
+    <file src="assets/icons/art2.png"/>
+    <file src="assets/icons/barber1.png"/>
+    <file src="assets/icons/barber2.png"/>
+    <file src="assets/icons/box0.png"/>
+    <file src="assets/icons/box1.png"/>
+    <file src="assets/icons/box2.png"/>
+    <file src="assets/icons/clothing1.png"/>
+    <file src="assets/icons/clothing2.png"/>
+
 </meta>
