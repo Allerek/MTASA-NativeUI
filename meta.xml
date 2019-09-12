@@ -5,7 +5,6 @@
     <script src="scale.lua" type="client"/>
     <script src="test.lua" type="client"/>
 
-    
     <file src="update.cfg"/>
     <file src="assets/defaultbg.png"/>
     <file src="assets/fonts/font.ttf"/>
