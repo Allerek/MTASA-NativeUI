@@ -13,6 +13,15 @@ addEventHandler("onClientResourceStart", resourceRoot, function()
     setTimer(function()
         setNativeSwitchSelection(2,"Majonez")
     end, 2000, 1)
+
+    setTimer(function()
+        nativeSetCheckBoxSelected(1, true)
+    end, 1000, 1)
+
+    setTimer(function()
+        nativeSetCheckBoxSelected(1, false)
+    end, 3000, 1)
+
 end)
 
 addEventHandler("onClientAcceptSwitch", getRootElement(), function(id, value)
@@ -28,5 +37,5 @@ addEventHandler("onClientAcceptButton", getRootElement(), function(id, text)
 end)
 
 addEventHandler("onClientCheckBoxChange", getRootElement(), function(id, checked)
-    print(id, checked)
+    print(nativeGetCheckBoxSelected(id))
 end)
