@@ -6,8 +6,9 @@ addEventHandler("onClientResourceStart", resourceRoot, function()
         else
             icontype = "ammo"
         end
-        addNativeButton("Fucking ["..i.."]", "#ff9800",icontype)
-        addNativeSwitch("Switch Test", {"Ketchup", "Majonez"})
+        addNativeCheckBox("CheckBox ["..i.."]", "#ff9800", false)
+        addNativeButton("Button ["..i.."]", "#ff9800",icontype)
+        addNativeSwitch("Switch ["..i.."]", {"Ketchup", "Majonez"})
     end
     setTimer(function()
         setNativeSwitchSelection(2,"Majonez")
@@ -17,9 +18,15 @@ end)
 addEventHandler("onClientAcceptSwitch", getRootElement(), function(id, value)
     print(value)
 end)
+
 addEventHandler("onClientChangeSwitch", getRootElement(), function(id, value)
     print(value)
 end)
+
 addEventHandler("onClientAcceptButton", getRootElement(), function(id, text)
     print(id, text)
+end)
+
+addEventHandler("onClientCheckBoxChange", getRootElement(), function(id, checked)
+    print(id, checked)
 end)
