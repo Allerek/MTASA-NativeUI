@@ -15,11 +15,11 @@ addEventHandler("onClientResourceStart", resourceRoot, function()
     end, 2000, 1)
 
     setTimer(function()
-        nativeSetCheckBoxSelected(1, true)
+        nativeSetCheckBoxSelection(1, true)
     end, 1000, 1)
 
     setTimer(function()
-        nativeSetCheckBoxSelected(1, false)
+        nativeSetCheckBoxSelection(1, false)
     end, 3000, 1)
 
 end)
@@ -37,5 +37,5 @@ addEventHandler("onClientAcceptButton", getRootElement(), function(id, text)
 end)
 
 addEventHandler("onClientCheckBoxChange", getRootElement(), function(id, checked)
-    print(nativeGetCheckBoxSelected(id))
+    print(nativeGetCheckBoxSelection(id))
 end)
