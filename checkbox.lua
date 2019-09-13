@@ -11,3 +11,28 @@ function addNativeCheckBox(text, color, check)
     }
     window.items[#window.items+1] = table
 end
+
+function nativeSetCheckBoxSelection(id, selection)
+    if not id or not selection then return end
+    assert(tonumber(id),"Bad argument @ nativeSetCheckBoxSelection [expected number at argument 1,  got "..type(id).." '"..id.."'']")
+    if not selection then
+        selection = 0
+    else
+        selection = 1
+    end
+    if window.items[id].type == "checkbox" then 
+        window.items[id].actual = selection
+    end
+end
+
+function nativeGetCheckBoxSelection(id)
+    if not id then return end
+    assert(tonumber(id),"Bad argument @ nativeSetCheckBoxSelection [expected number at argument 1,  got "..type(id).." '"..id.."'']")
+    if window.items[id].type == "checkbox" then 
+        if window.items[id].actual == 1 then 
+            return true
+        else
+            return false
+        end
+    end
+end
