@@ -15,7 +15,11 @@ end
 function nativeSetCheckBoxSelection(id, selection)
     if not id or not selection then return end
     assert(tonumber(id),"Bad argument @ nativeSetCheckBoxSelection [expected number at argument 1,  got "..type(id).." '"..id.."'']")
-    assert(tonumber(selection),"Bad argument @ nativeSetCheckBoxSelection[expected number at argument 2,  got "..type(selection).." '"..selection.."'']")
+    if not selection then
+        selection = 0
+    else
+        selection = 1
+    end
     if window.items[id].type == "checkbox" then 
         window.items[id].actual = selection
     end
