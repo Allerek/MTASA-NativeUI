@@ -22,13 +22,11 @@ Parameters:
  - string Menu Title
  - string Menu Caption or bool false
  - string Image Path **Standard Picture Paths "assets/defaultbg.png" and "assets/24.png"**
- -  color Color of something no one knows what it is
+ -  color Menu color(if image passed **false**)
  -  color Title color
- -  color Caption Color
  -  string Position that the menu will be **Possible positions right, left**
  - bool Show counter
- - bool something no one knows what it is
- - int Quantity of items per page **Recommended 10**
+ - int Quantity of items per page **Recommended 10, Maximum 10**
  - string Position that the menu title will be **Possible positions right, left, center**
 
 **clearNativeUI**
