@@ -178,9 +178,7 @@ Description:
 
 ```lua
 addEventHandler("onClientAcceptSwitch", getRootElement(), function(id, value)
-
-print(value)
-
+    print(value)
 end)
 ```
 
@@ -191,9 +189,7 @@ Description:
 
 ```lua
 addEventHandler("onClientChangeSwitch", getRootElement(), function(id, value)
-
-print(value)
-
+    print(value)
 end)
 ```
 
@@ -204,8 +200,6 @@ Description:
 
 ```lua
 addEventHandler("onClientCheckBoxChange", getRootElement(), function(id, checked)
-
-print(nativeGetCheckBoxSelection(id))
-
+    print(checked)
 end)
 ```
