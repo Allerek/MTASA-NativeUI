@@ -13,7 +13,7 @@ addEvent("onClientAcceptButton", true)
 -- CheckBox Events
 addEvent("onClientCheckBoxChange", true)
 
-function createNativeUI(name, title, image, color, namecolor, titlecolor, align, counter, scroll, scrollitems, namealign)
+function createNativeUI(name, title, image, color, namecolor, titlecolor, align, counter, scrollitems, namealign)
     if isNativeShown then return false end
     if name == "" then
         assert(type(name) == string, "Bad argument @ createNativeUI [expected string at argument 1,  got "..type(name).." '"..name.."'']")
@@ -23,6 +23,12 @@ function createNativeUI(name, title, image, color, namecolor, titlecolor, align,
     end
     if not image then
         assert(color, "[Native UI]No specified image and not specified color")
+    end
+    if image then
+        assert(fileExists(image), "Bad argument @ createNativeUI [expected file at argument 3,  got "..type(color).." '"..color.."'']")
+    end
+    if color then
+        assert(tonumber(color), "Bad argument @ createNativeUI [expected color at argument 4,  got "..type(color).." '"..color.."'']")
     end
     if align then
         assert(align == "left" or align == "right", "Invalid align type @ createNativeUI [expected 'left'/'right' at argument 7,  got"..type(align).." '"..align.."'']")
@@ -57,12 +63,13 @@ function createNativeUI(name, title, image, color, namecolor, titlecolor, align,
     window.titlepos3 = Vector2(window.titlepos["x"]+window.titlesize["x"]-(15/zoom), window.titlepos["y"]+(window.titlesize["y"]/2))
     window.namefont = dxCreateFont("assets/fonts/font.ttf", 55/zoom)
     window.titlefont = dxCreateFont("assets/fonts/fonttitle.ttf", 18/zoom, false)
-    window.image = image or "assets/defaultbg.png"
+    window.image = image or false
+    window.color = color or false
     window.namecolor = namecolor or tocolor(255, 255, 255)
     window.titlecolor = titlecolor or tocolor(255, 255, 255)
     window.counter = counter or false
     window.scroll = scroll or false
-    if not scrollitems or scrollitems > 10 then
+    if not scrollitems or scrollitems > 10 or scrollitems <= 1 then
         scrollitems = 10
     end
     local scale = scaleScreen(0,0,50,50)
@@ -74,7 +81,11 @@ function createNativeUI(name, title, image, color, namecolor, titlecolor, align,
 end
 
 function renderNative()
-    dxDrawImage(window.namepos, window.namesize, window.image)
+    if not window.image then
+        dxDrawRectangle(window.namepos,window.namesize,window.color)
+    else
+        dxDrawImage(window.namepos, window.namesize, window.image)
+    end
     dxDrawRectangle(window.titlepos, window.titlesize, tocolor(0, 0, 0))
     dxDrawText(window.title, window.titlepos2, nil, nil, window.titlecolor, 1, window.titlefont, "left", "center")
     if window.counter then
@@ -233,10 +244,10 @@ function bindKeys()
         if window.items[actual].type == "checkbox" then
             if window.items[actual].actual == 1 then 
                 window.items[actual].actual = 0
-                triggerEvent("onClientCheckBoxChange", localPlayer, actual, window.items[actual].actual)
+                triggerEvent("onClientCheckBoxChange", localPlayer, actual, false)
             else
                 window.items[actual].actual = 1
-                triggerEvent("onClientCheckBoxChange", localPlayer, actual, window.items[actual].actual)
+                triggerEvent("onClientCheckBoxChange", localPlayer, actual, true)
             end
         end
     end)
