@@ -254,12 +254,7 @@ function bindKeys()
 end
 
 function playNativeSound()
-    if isElement(sound) then
-        destroyElement(sound)
-        sound = playSound("assets/change.wav", false)
-    else
-        sound = playSound("assets/change.wav", false)
-    end
+    sound = playSound("assets/change.wav", false)
 end
 
 function getCurrentNativePage()
