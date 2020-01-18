@@ -192,7 +192,7 @@ addEventHandler("onClientChangeSwitch", getRootElement(), function(id, value)
     print(value)
 end)
 ```
-
+## CheckBox
 **onClientCheckBoxChange**
 
 Description:  
