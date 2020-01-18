@@ -28,4 +28,17 @@
     <file src="assets/icons/clothing1.png"/>
     <file src="assets/icons/clothing2.png"/>
 
+    <export function="createNativeUI" type="client"/>
+    <export function="clearNativeUI" type="client"/>
+    <export function="removeNativeItem" type="client"/>
+    <export function="removeNativeUI" type="client"/>
+    <export function="addNativeButton" type="client"/>
+    <export function="setNativeButtonIcon" type="client"/>
+    <export function="removeNativeButtonIcon" type="client"/>
+    <export function="addNativeCheckBox" type="client"/>
+    <export function="nativeSetCheckBoxSelection" type="client"/>
+    <export function="nativeGetCheckBoxSelection" type="client"/>
+    <export function="addNativeSwitch" type="client"/>
+    <export function="getSwitchText" type="client"/>
+    <export function="setNativeSwitchSelection" type="client"/>
 </meta>
