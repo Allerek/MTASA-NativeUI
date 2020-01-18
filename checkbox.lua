@@ -34,5 +34,7 @@ function nativeGetCheckBoxSelection(id)
         else
             return false
         end
+    else
+        return false
     end
 end
