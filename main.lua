@@ -274,6 +274,7 @@ end
 function removeNativeUI()
     removeEventHandler("onClientRender",getRootElement(),renderNative)
     window = {}
+    window.items = {}
     actual = 0
     isNativeShown = false
 end
